@@ -1,0 +1,34 @@
+# Root configuration
+.env
+.env.local
+.env.*.local
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.DS_Store
+Thumbs.db
+
+# Virtualenv
+venv/
+.venv/
+env/
+
+# Database
+*.sqlite3
+*.db
+
+# Node
+node_modules/
+.next/
+out/
+.vercel
+
+# Static / Media
+staticfiles/
+media/
