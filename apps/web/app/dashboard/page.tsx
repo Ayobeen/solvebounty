@@ -44,7 +44,7 @@ export default function DashboardPage() {
       try {
         const sRes = await fetchApi('/me/submissions/');
         setMySubmissions(sRes || []);
-      } catch (e) {}
+      } catch (e) { }
 
       // Load payout account
       try {
@@ -52,7 +52,7 @@ export default function DashboardPage() {
         setPayoutAccount(pRes);
         if (pRes.account_number) setAccountNumber(pRes.account_number);
         if (pRes.account_name) setAccountName(pRes.account_name);
-      } catch (e) {}
+      } catch (e) { }
     } catch (e) {
       console.error(e);
     } finally {
@@ -133,11 +133,10 @@ export default function DashboardPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              activeTab === tab.id
-                ? 'bg-slate-900 text-white'
-                : 'text-slate-600 hover:bg-slate-100'
-            }`}
+            className={`px-4 py-2 rounded-lg transition-colors ${activeTab === tab.id
+              ? 'bg-slate-900 text-white'
+              : 'text-slate-600 hover:bg-slate-100'
+              }`}
           >
             {tab.label}
           </button>
@@ -211,9 +210,8 @@ export default function DashboardPage() {
               >
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2">
-                    <span className={`text-xs px-2 py-0.5 rounded font-bold ${
-                      s.status === 'WINNER' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
-                    }`}>
+                    <span className={`text-xs px-2 py-0.5 rounded font-bold ${s.status === 'WINNER' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'
+                      }`}>
                       {s.status}
                     </span>
                     <span className="text-xs text-slate-500">Submitted on {new Date(s.submitted_at).toLocaleDateString()}</span>
@@ -241,7 +239,7 @@ export default function DashboardPage() {
               Nigerian Commercial Bank Payout Details
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              When you win a challenge bounty, earnings will be transferred directly to this NUBAN account via Paystack Transfers.
+              When you win a challenge bounty, earnings will be transferred directly to this NUBAN account.
             </p>
           </div>
 

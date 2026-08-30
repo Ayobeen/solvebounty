@@ -21,7 +21,7 @@ export function Footer() {
             </p>
             <div className="flex items-center text-xs text-slate-500 space-x-1">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Secured with Paystack escrow & ledger audit trails</span>
+              <span>Secured with escrow & ledger audit trails</span>
             </div>
           </div>
 
@@ -45,8 +45,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-slate-100 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500">
-          <p>© 2026 SolveBounty. Built for Nigeria.</p>
-          <p>Engineered with Django + Next.js + PostgreSQL</p>
+          <p>© 2026 SolveBounty. All Rights Reserved.</p>
+          <p>Where Problems Meet Solvers</p>
         </div>
       </div>
     </footer>

@@ -5,7 +5,7 @@ import { ArrowRight, Trophy, Sparkles, CheckCircle2, ShieldCheck, Zap, Users, Se
 export default function HomePage() {
   const steps = [
     { num: '01', title: 'POST', desc: 'Define your challenge or use our AI Challenge Architect to draft clear specs.' },
-    { num: '02', title: 'FUND', desc: 'Fund the bounty securely via Paystack into protected escrow.' },
+    { num: '02', title: 'FUND', desc: 'Fund the bounty securely via our payment gateway into protected escrow account.' },
     { num: '03', title: 'COMPETE', desc: 'Top solvers across Nigeria submit verified working solutions.' },
     { num: '04', title: 'CHOOSE', desc: 'Review submissions, inspect code/demos, and pick the best solution.' },
     { num: '05', title: 'PAY', desc: 'Bounty funds are automatically disbursed to the winner’s bank account.' },
@@ -51,7 +51,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-semibold mb-6 border border-emerald-200">
             <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span>AI-Assisted Bounty Marketplace for Nigerian Talent</span>
+            <span>AI-Powered Bounty Marketplace for Nigerian Talent</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 max-w-4xl mx-auto leading-tight sm:leading-none">
@@ -186,7 +186,7 @@ export default function HomePage() {
               </span>
               <h2 className="text-3xl font-extrabold mt-3">Double-Entry Ledger & Escrow Security</h2>
               <p className="mt-3 text-emerald-100 text-sm leading-relaxed">
-                Posters fund challenges up front before solvers invest their time. Every Naira is tracked through immutable accounting ledger entries and disbursed seamlessly to Nigerian bank accounts via Paystack Transfers.
+                Posters fund challenges up front before solvers invest their time. Every Naira is tracked through immutable accounting ledger entries and disbursed seamlessly to Nigerian bank accounts.
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 space-y-4">

@@ -23,7 +23,7 @@ export function Navbar() {
               </span>
             </Link>
             <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-              🇳🇬 Nigeria
+              Where Problems Meet solvers
             </span>
           </div>
 
