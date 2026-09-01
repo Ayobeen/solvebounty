@@ -18,8 +18,7 @@ class ChallengeService:
         if challenge.status == Challenge.Status.FUNDED:
             challenge.status = Challenge.Status.OPEN
         else:
-            # In MVP, if direct publishing is allowed without pre-payment, mark OPEN or PENDING_PAYMENT
-            challenge.status = Challenge.Status.OPEN
+            challenge.status = Challenge.Status.PENDING_PAYMENT
             
         challenge.save()
 

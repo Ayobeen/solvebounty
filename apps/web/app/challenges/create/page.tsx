@@ -78,11 +78,12 @@ export default function CreateChallengePage() {
       const deadlineDate = new Date();
       deadlineDate.setDate(deadlineDate.getDate() + parseInt(deadlineDays || '14', 10));
 
+      const budgetNum = parseFloat(budget) || 0;
       const payload = {
         title,
         description,
         category,
-        budget: parseFloat(budget),
+        budget: budgetNum,
         currency: 'NGN',
         deadline: deadlineDate.toISOString(),
         requirements,
@@ -90,18 +91,35 @@ export default function CreateChallengePage() {
         rules,
       };
 
+      // 1. Create challenge (starts in DRAFT / PENDING_PAYMENT)
       const res = await fetchApi('/challenges/', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
 
-      // Automatically publish to OPEN
-      await fetchApi(`/challenges/${res.id}/publish/`, { method: 'POST' });
+      // 2. Initialize Paystack payment intent
+      try {
+        const paymentRes = await fetchApi('/payments/initialize/', {
+          method: 'POST',
+          body: JSON.stringify({
+            challenge_id: res.id,
+            callback_url: `${window.location.origin}/challenges/${res.id}?payment_verify=1`,
+          }),
+        });
 
+        if (paymentRes.authorization_url) {
+          // Direct poster to Paystack secure checkout
+          window.location.href = paymentRes.authorization_url;
+          return;
+        }
+      } catch (payErr: any) {
+        console.warn('Payment init warning:', payErr);
+      }
+
+      // Fallback navigation if no direct redirect
       router.push(`/challenges/${res.id}`);
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to create challenge.');
-    } finally {
       setSubmitting(false);
     }
   };
@@ -376,7 +394,6 @@ export default function CreateChallengePage() {
               {category}
             </span>
             <h2 className="text-2xl font-extrabold text-slate-900 mt-2">{title}</h2>
-            <div className="text-lg font-black text-emerald-600 mt-1">₦{Number(budget).toLocaleString()} Prize</div>
           </div>
 
           <div className="space-y-4 text-xs text-slate-700">
@@ -395,10 +412,29 @@ export default function CreateChallengePage() {
             </div>
           </div>
 
+          {/* Payment & Escrow Breakdown */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+            <div className="text-xs font-bold uppercase text-slate-500 tracking-wider">Paystack Escrow Funding Summary</div>
+            <div className="space-y-1.5 text-xs text-slate-700">
+              <div className="flex justify-between">
+                <span>Solver Winner Prize:</span>
+                <span className="font-semibold text-slate-900">₦{Number(budget).toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-slate-500">
+                <span>Platform Escrow Fee (10%):</span>
+                <span>₦{(Number(budget) * 0.1).toLocaleString()}</span>
+              </div>
+              <div className="border-t border-slate-200 pt-2 flex justify-between text-sm font-extrabold text-slate-900">
+                <span>Total Escrow Deposit:</span>
+                <span className="text-emerald-600">₦{(Number(budget) * 1.1).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
           <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center space-x-3 text-xs text-emerald-800">
             <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
             <div>
-              <strong>Instant Escrow Publication:</strong> This challenge will immediately appear in the active bounties feed.
+              <strong>Protected by Paystack Escrow:</strong> Your funds will be safely locked in double-entry escrow and only released when you select and approve a winning solution.
             </div>
           </div>
 
@@ -416,7 +452,7 @@ export default function CreateChallengePage() {
               className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl shadow-md transition-all flex items-center space-x-2"
             >
               <Trophy className="w-4 h-4" />
-              <span>{submitting ? 'Publishing...' : 'Publish Challenge'}</span>
+              <span>{submitting ? 'Connecting to Paystack...' : `Pay ₦${(Number(budget) * 1.1).toLocaleString()} with Paystack`}</span>
             </button>
           </div>
         </div>

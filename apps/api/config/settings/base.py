@@ -3,6 +3,20 @@ from pathlib import Path
 from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+WORKSPACE_DIR = BASE_DIR.parent
+
+# Auto-load environment variables from .env if present
+for env_path in [WORKSPACE_DIR / '.env', BASE_DIR / '.env']:
+    if env_path.exists():
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    k, v = line.split('=', 1)
+                    k = k.strip()
+                    v = v.strip().strip("'\"")
+                    if k not in os.environ:
+                        os.environ[k] = v
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'solvebounty-insecure-dev-key-change-in-prod')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
